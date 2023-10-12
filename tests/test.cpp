@@ -1,8 +1,9 @@
-#include <iostream>
-#include "../includes/include.hpp"
+#include "../includes/orca.hpp"
 
 int main(void)
 {
-    open_orca();
+    Orca orca(sf::VideoMode(800, 600));
+
+    orca.open();
     return (0);
 }
