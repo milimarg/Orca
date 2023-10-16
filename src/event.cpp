@@ -29,5 +29,5 @@ void Orca::runEvent(sf::Event &event, sf::RenderWindow *window)
             }
         }
     }
-    Orca::checkIfAllowDisplay();
+    checkIfAllowDisplay();
 }

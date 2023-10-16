@@ -4,6 +4,9 @@ void Orca::open()
 {
     sf::Event event;
 
+    getCurrentPath();
+    readCurrentPath();
+    std::cout << this->currentPath << std::endl;
     while (this->window->isOpen()) {
         this->window->clear();
         this->runEvent(event, this->window);

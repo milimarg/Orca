@@ -18,9 +18,12 @@ class Orca {
         std::array<sf::RectangleShape, 2> elements;
         unsigned int elementIndex;
         int allowDisplay;
+        std::string currentPath;
         void runEvent(sf::Event &event, sf::RenderWindow *window);
         void addElement(sf::IntRect rect, sf::Color color);
         void checkIfAllowDisplay();
+        void getCurrentPath();
+        void readCurrentPath();
 };
 
 #endif //ORCA_ORCA_HPP
