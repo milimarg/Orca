@@ -2,7 +2,7 @@
 
 void Orca::addElement(const sf::IntRect rect, const sf::Color color)
 {
-    if (this->elementIndex == ELEMENTS_NUMBER) {
+    if (this->elementIndex == UI_ELEMENTS_NUMBER) {
         std::cerr << "Orca: cannot add new element: array is full" << std::endl;
         return;
     }
