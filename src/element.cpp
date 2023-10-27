@@ -1,8 +1,9 @@
+#include <iostream>
 #include "../includes/orca.hpp"
 
-void Orca::addElement(const sf::IntRect rect, const sf::Color color)
+void Orca::addElement(sf::IntRect rect, sf::Color color, std::string name)
 {
-    if (this->elementIndex == UI_ELEMENTS_NUMBER) {
+    if (elements.size() == UI_ELEMENTS_NUMBER) {
         std::cerr << "Orca: cannot add new element: array is full" << std::endl;
         return;
     }
@@ -11,5 +12,5 @@ void Orca::addElement(const sf::IntRect rect, const sf::Color color)
     shape.setPosition(rect.left, rect.top);
     shape.setFillColor(color);
     shape.setOutlineColor(color);
-    this->elements[this->elementIndex++] = shape;
+    elements[name] = shape;
 }

@@ -11,11 +11,11 @@ void Orca::open()
         this->runEvent(event, this->window);
         if (this->allowDisplay) {
             for(const auto &element : this->elements) {
-                this->window->draw(element);
+                this->window->draw(element.second);
             }
-            for(const auto &file : this->files) {
-                this->window->draw(file.data);
-                this->window->draw(file.icon);
+            for(auto &file : this->files) {
+                file.onClick(window);
+                file.draw(window);
             }
         }
         this->window->display();

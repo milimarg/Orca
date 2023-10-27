@@ -12,26 +12,24 @@ void Orca::readCurrentPath()
     int index = 0;
 
     this->files.clear();
-    for (const auto &entry : std::filesystem::directory_iterator(this->currentPath)) {
+    for (const auto &entry : std::filesystem::directory_iterator(currentPath)) {
         std::string filename = entry.path().filename().string();
 
         if (filename.at(0) != '.') {
-            fileElement file;
-            file.data.setString(filename);
-            file.data.setFont(this->font);
-            file.data.setCharacterSize(15);
-            file.data.move(150.0f + 10.0f, 50.0f + 10.0f); // get values from ui elements lengths
-            file.data.move(30.0f, index * 20.0f); // register constants
-            if (std::filesystem::is_directory(entry)) {
-                file.icon = sf::Sprite(this->categoriesIcon.at(0));
-            }
+            sf::Vector2f pos = {
+                elements["leftbar"].getSize().x + LEN_BETWEEN_LEFT_FILE_ICON,
+                elements["topbar"].getSize().y + 10.0f + index++ * LEN_BETWEEN_FILES
+            };
+            fileElement::Type type;
             if (std::filesystem::is_regular_file(entry)) {
-                file.icon = sf::Sprite(this->categoriesIcon.at(1));
+                type = fileElement::REGULAR;
             }
-            file.icon.setScale(0.0625f, 0.0625); // register constants
-            file.icon.setPosition(150.0f + 10.0f, 50.0f + 10.0f + index * 20.0f); // register constants
-            this->files.push_back(file);
-            index++;
+            if (std::filesystem::is_directory(entry)) {
+                type = fileElement::DIRECTORY;
+            }
+            fileElement file(pos, sf::Color::White, filename, font);
+            file.setIcon(type, assets);
+            files.push_back(file);
         }
     }
 }

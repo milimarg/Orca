@@ -2,7 +2,8 @@ SRC	=	src/event.cpp \
 		src/orca.cpp \
 		src/element.cpp \
 		src/open.cpp \
-		src/getFiles.cpp
+		src/getFiles.cpp \
+		src/fileElement.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
