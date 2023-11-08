@@ -4,14 +4,14 @@
 
 void Orca::getCurrentPath()
 {
-    this->currentPath = std::filesystem::current_path().string();
+    currentPath = std::filesystem::current_path().string();
 }
 
 void Orca::readCurrentPath()
 {
     int index = 0;
 
-    this->files.clear();
+    files.clear();
     for (const auto &entry : std::filesystem::directory_iterator(currentPath)) {
         std::string filename = entry.path().filename().string();
 
@@ -29,6 +29,8 @@ void Orca::readCurrentPath()
             }
             fileElement file(pos, sf::Color::White, filename, font);
             file.setIcon(type, assets);
+            file.fileIndex = index;
+            file.data.setString(file.data.getString() + " (" + std::to_string(index) + ")");
             files.push_back(file);
         }
     }

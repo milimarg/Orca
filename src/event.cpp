@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../includes/orca.hpp"
 
 void Orca::checkIfAllowDisplay()

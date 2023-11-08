@@ -6,6 +6,7 @@ Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontName)
     window = new sf::RenderWindow(videoMode, "Orca");
     windowSize = window->getSize();
     minScreenSize = sf::VideoMode(800, 600);
+    clock = new sf::Clock();
     font.loadFromFile(fontName);
     static const int x_shift = 150;
     addElement(sf::IntRect(0, 0, x_shift, windowSize.y), sf::Color(40, 40, 40), "leftbar");
@@ -21,5 +22,6 @@ Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontName)
 
 Orca::~Orca()
 {
-    delete this->window;
+    delete window;
+    delete clock;
 }

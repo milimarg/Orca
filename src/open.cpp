@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../includes/orca.hpp"
 
 void Orca::open()
@@ -10,11 +11,14 @@ void Orca::open()
         this->window->clear();
         this->runEvent(event, this->window);
         if (this->allowDisplay) {
-            for(const auto &element : this->elements) {
+            for (const auto &element : this->elements) {
                 this->window->draw(element.second);
             }
-            for(auto &file : this->files) {
-                file.onClick(window);
+            for (auto &selected : this->selected) {
+                window->draw(selected.background);
+            }
+            for (auto &file : this->files) {
+                onClick(file);
                 file.draw(window);
             }
         }

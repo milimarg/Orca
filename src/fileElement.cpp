@@ -1,4 +1,3 @@
-#include <filesystem>
 #include <iostream>
 #include "../includes/fileElement.hpp"
 
@@ -30,18 +29,13 @@ void fileElement::setIcon(fileElement::Type _type, std::unordered_map <std::stri
 
 void fileElement::draw(sf::RenderWindow *window)
 {
-    if (clicked) {
-        window->draw(background);
-    }
     window->draw(icon);
     window->draw(data);
 }
 
-void fileElement::onClick(sf::RenderWindow *window)
+bool fileElement::onHover(sf::RenderWindow *window)
 {
-    const bool state = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
-
     sf::FloatRect rect(background.getPosition(), background.getSize()); // don't recreate a rect each time
     sf::Vector2f test((float)sf::Mouse::getPosition(*window).x, (float)sf::Mouse::getPosition(*window).y); // how to static_cast?
-    clicked = state && rect.contains(test);
+    return rect.contains(test);
 }

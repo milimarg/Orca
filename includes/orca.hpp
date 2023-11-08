@@ -22,6 +22,7 @@
             void open();
         private:
             sf::RenderWindow *window;
+            sf::Clock *clock;
             sf::Vector2u windowSize;
             sf::VideoMode minScreenSize;
             std::unordered_map<std::string, sf::RectangleShape> elements;
@@ -30,11 +31,16 @@
             std::vector<fileElement> files;
             sf::Font font;
             std::unordered_map<std::string, sf::Texture> assets;
+            std::vector<fileElement> selected;
             void runEvent(sf::Event &event, sf::RenderWindow *window);
             void addElement(sf::IntRect rect, sf::Color color, std::string name);
             void checkIfAllowDisplay();
+            // path
             void getCurrentPath();
             void readCurrentPath();
+            // click
+            void onClick(fileElement &element);
+            void doubleClick(fileElement &element);
     };
 
 #endif //ORCA_ORCA_HPP
