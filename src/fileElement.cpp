@@ -3,7 +3,8 @@
 
 fileElement::fileElement(sf::Vector2f &pos, const sf::Color &color, std::string name, sf::Font &font)
 {
-    data.setString(name);
+    string = name;
+    data.setString(string);
     data.setFont(font);
     data.setCharacterSize(15);
     data.setPosition(pos.x, pos.y);

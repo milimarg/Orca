@@ -38,6 +38,7 @@
             // path
             void getCurrentPath();
             void readCurrentPath();
+            void appendFile(std::string &filename, fileElement::Type type, int &index);
             // click
             void onClick(fileElement &element);
             void doubleClick(fileElement &element);

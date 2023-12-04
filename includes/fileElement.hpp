@@ -16,10 +16,11 @@
             bool onHover(sf::RenderWindow *window);
             sf::Text data;
             sf::RectangleShape background;
-            int fileIndex;
+            int index;
+            std::string string;
+            Type type;
         private:
             sf::Sprite icon;
-            Type type;
     };
 
 #endif //ORCA_FILEELEMENT_HPP

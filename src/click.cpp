@@ -8,11 +8,11 @@ void Orca::doubleClick(fileElement &file)
     static bool antiSpam = false;
     static int keyNumber = 0;
     static sf::Int32 last = 0;
-    static int lastFileIndex = 0;
+    static int lastIndex = 0;
     sf::Int32 current = clock->getElapsedTime().asMilliseconds();
     int diff = current - last;
 
-    if (file.fileIndex != lastFileIndex && keyNumber != 0) {
+    if (file.index != lastIndex && keyNumber != 0) {
         keyNumber = 0;
         antiSpam = false;
     }
@@ -26,13 +26,15 @@ void Orca::doubleClick(fileElement &file)
     if (keyNumber >= 2) {
         keyNumber = 0;
         antiSpam = false;
-        std::cout << "double-click! - " << current - last << std::endl;
-        std::filesystem::current_path("..");
+        last = 0;
+        std::filesystem::current_path(file.string);
         getCurrentPath();
         readCurrentPath();
+        std::cout << "path = " << currentPath << std::endl;
+        selected.clear();
     }
     last = current;
-    lastFileIndex = file.fileIndex;
+    lastIndex = file.index;
 }
 
 void Orca::onClick(fileElement &file)
@@ -41,24 +43,25 @@ void Orca::onClick(fileElement &file)
     const bool maj = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift);
     const bool ctrl = sf::Keyboard::isKeyPressed(sf::Keyboard::LControl);
 
-    if (file.onHover(window) && click) {
-        if (!maj && !ctrl) {
-            selected.clear();
-            selected.push_back(file);
+    if (!(file.onHover(window) && click)) {
+        return;
+    }
+    if (!maj && !ctrl) {
+        selected.clear();
+        selected.push_back(file);
+        if (selected.size() == 1 && file.type == fileElement::Type::DIRECTORY)
             doubleClick(file);
+    }
+    if (ctrl) {
+        selected.push_back(file);
+    }
+    if (maj) {
+        fileElement &a = selected.size() > 0 ? selected.at(0) : files.at(0);
+        int difference = a.index - file.index;
+        int differenceAbs = abs(difference);
+        int differenceIsPos = difference >= 0;
+        for (int i = (differenceIsPos ? -1 : 1); i < (differenceAbs + !differenceIsPos); i++) {
+            selected.push_back(files.at(file.index + (differenceIsPos ? i : -i)));
         }
-        if (ctrl) {
-            selected.push_back(file);
-        }
-        if (maj) {
-            fileElement &a = selected.size() > 0 ? selected.at(0) : files.at(0); // test when size == 0
-            int difference = a.fileIndex - file.fileIndex;
-            int differenceAbs = abs(difference);
-            int differenceIsPos = difference >= 0;
-            for (int i = (differenceIsPos ? -1 : 1); i < (differenceAbs + !differenceIsPos); i++) {
-                selected.push_back(files.at(file.fileIndex + (differenceIsPos ? i : -i)));
-            }
-        }
-
     }
 }
