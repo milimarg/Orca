@@ -1,27 +1,34 @@
 #include <iostream>
 #include "../includes/orca.hpp"
 
-void Orca::open()
+std::vector<fileElement> Orca::open()
 {
     sf::Event event;
+    static int quit = 0;
 
     getCurrentPath();
     readCurrentPath();
-    while (this->window->isOpen()) {
-        this->window->clear();
-        this->runEvent(event, this->window);
-        if (this->allowDisplay) {
-            for (const auto &element : this->elements) {
-                this->window->draw(element.second);
+    while (window->isOpen()) {
+        window->clear();
+        runEvent(event, window, quit);
+        if (allowDisplay && !quit) {
+            for (const auto &element : elements) {
+                window->draw(element.second);
             }
-            for (auto &selected : this->selected) {
+            for (auto &selected : selected) {
                 window->draw(selected.background);
             }
-            for (auto &file : this->files) {
-                onClick(file);
+            int output = 1;
+            for (auto &file : files) {
+                output = output && onClick(file);
                 file.draw(window);
             }
+            if (output == 1 && selected.size() > 0) {
+                selected.clear();
+            }
+            window->draw(selectionButtonText);
         }
-        this->window->display();
+        window->display();
     }
+    return selected;
 }

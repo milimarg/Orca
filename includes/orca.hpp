@@ -3,7 +3,7 @@
     #include "fileElement.hpp"
 
     /* ELEMENTS NUMBER */
-    #define UI_ELEMENTS_NUMBER 2
+    #define UI_ELEMENTS_NUMBER 3
     #define FILE_CATEGORIES_NUMBER 2
 
     /* LENGTHS */
@@ -17,9 +17,9 @@
 
     class Orca {
         public:
-            Orca(const sf::VideoMode &videoMode, const std::string &fontName);
+            Orca(const sf::VideoMode &videoMode, const std::string &fontPath);
             ~Orca();
-            void open();
+            std::vector<fileElement> open();
         private:
             sf::RenderWindow *window;
             sf::Clock *clock;
@@ -32,15 +32,16 @@
             sf::Font font;
             std::unordered_map<std::string, sf::Texture> assets;
             std::vector<fileElement> selected;
-            void runEvent(sf::Event &event, sf::RenderWindow *window);
+            sf::Text selectionButtonText;
+            void runEvent(sf::Event &event, sf::RenderWindow *window, int &quit);
             void addElement(sf::IntRect rect, sf::Color color, std::string name);
             void checkIfAllowDisplay();
             // path
             void getCurrentPath();
             void readCurrentPath();
-            void appendFile(std::string &filename, fileElement::Type type, int &index);
+            void appendFile(std::string filename, std::string filepath, fileElement::Type type, int &index);
             // click
-            void onClick(fileElement &element);
+            int onClick(fileElement &element);
             void doubleClick(fileElement &element);
     };
 

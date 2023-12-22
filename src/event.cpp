@@ -1,34 +1,38 @@
-#include <iostream>
 #include "../includes/orca.hpp"
 
 void Orca::checkIfAllowDisplay()
 {
     static int allowDisplayHasChanged = 0;
 
-    this->allowDisplay = this->windowSize.x >= this->minScreenSize.width &&
-                         this->windowSize.y >= this->minScreenSize.height;
-    if (!this->allowDisplay && !allowDisplayHasChanged) {
+    allowDisplay = windowSize.x >= minScreenSize.width &&
+                   windowSize.y >= minScreenSize.height;
+    if (!allowDisplay && !allowDisplayHasChanged) {
         allowDisplayHasChanged = 1;
-        this->window->setTitle("Orca: window size too small (< 800x600)");
+        window->setTitle("Orca: window size too small (< 800x600)");
     }
-    if (this->allowDisplay && allowDisplayHasChanged) {
+    if (allowDisplay && allowDisplayHasChanged) {
         allowDisplayHasChanged = 0;
-        this->window->setTitle("Orca");
+        window->setTitle("Orca");
     }
 }
 
-void Orca::runEvent(sf::Event &event, sf::RenderWindow *window)
+void Orca::runEvent(sf::Event &event, sf::RenderWindow *window, int &quit)
 {
     while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed || quit) {
             window->close();
         }
         if (event.type == sf::Event::Resized) {
-            sf::Vector2u size = this->window->getSize();
-            if (size.x != this->windowSize.x || size.y != this->windowSize.y) {
-                this->windowSize = this->window->getSize();
+            sf::Vector2u size = window->getSize();
+            if (size.x != windowSize.x || size.y != windowSize.y) {
+                windowSize = window->getSize();
             }
         }
+    }
+    sf::Vector2f pos = sf::Vector2f(sf::Mouse::getPosition(*window));
+    if (elements["selectionbutton"].getGlobalBounds().contains(pos) &&
+    sf::Mouse::isButtonPressed(sf::Mouse::Left) && selected.size() > 0) {
+        quit = 1;
     }
     checkIfAllowDisplay();
 }

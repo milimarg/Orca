@@ -10,17 +10,21 @@
                 REGULAR,
                 DIRECTORY
             };
-            fileElement(sf::Vector2f &pos, const sf::Color &color, std::string name, sf::Font &font);
+            fileElement(sf::Vector2f &pos, const sf::Color &color, std::string name, std::string path, sf::Font &font);
             void setIcon(fileElement::Type _type, std::unordered_map<std::string, sf::Texture> &assets);
             void draw(sf::RenderWindow *window);
             bool onHover(sf::RenderWindow *window);
-            sf::Text data;
+            fileElement::Type getType();
+            sf::Text &getText();
+            int getIndex();
+            void setIndex(int index);
             sf::RectangleShape background;
-            int index;
-            std::string string;
-            Type type;
         private:
             sf::Sprite icon;
+            Type type;
+            sf::Text data;
+            int index;
+            std::string path;
     };
 
 #endif //ORCA_FILEELEMENT_HPP
