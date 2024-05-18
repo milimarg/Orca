@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../includes/orca.hpp"
+#include "../includes/Orca.hpp"
 
 void Orca::addElement(sf::IntRect rect, sf::Color color, std::string name)
 {

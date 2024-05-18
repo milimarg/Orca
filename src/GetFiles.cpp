@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <typeinfo>
-#include "../includes/orca.hpp"
+#include "../includes/Orca.hpp"
 
 void Orca::getCurrentPath()
 {
@@ -11,7 +11,7 @@ void Orca::getCurrentPath()
 
 void Orca::appendFile(std::string filename,
                       std::string filepath,
-                      fileElement::Type type,
+                      FileElement::Type type,
                       int &index)
 {
     sf::Vector2f pos = {
@@ -19,7 +19,7 @@ void Orca::appendFile(std::string filename,
             elements["topbar"].getSize().y + 10.0f + index * LEN_BETWEEN_FILES
     };
 
-    fileElement file(pos, sf::Color::White, filename, filepath, font);
+    FileElement file(pos, sf::Color::White, filename, filepath, font);
     file.setIcon(type, assets);
     file.setIndex(index);
     file.setString(file.getString());
@@ -30,17 +30,17 @@ void Orca::appendFile(std::string filename,
 void Orca::readCurrentPath()
 {
     int index = 0;
-    fileElement::Type type;
+    FileElement::Type type;
 
     files.clear();
-    type = fileElement::Type::DIRECTORY;
+    type = FileElement::Type::DIRECTORY;
     appendFile("..", currentPath, type, index);
     for (const auto &entry : std::filesystem::directory_iterator(currentPath)) {
         if (std::filesystem::is_regular_file(entry)) {
-            type = fileElement::Type::REGULAR;
+            type = FileElement::Type::REGULAR;
         }
         if (std::filesystem::is_directory(entry)) {
-            type = fileElement::Type::DIRECTORY;
+            type = FileElement::Type::DIRECTORY;
         }
         if (entry.path().filename().string().at(0) == '.') {
             continue;

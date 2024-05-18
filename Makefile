@@ -1,10 +1,10 @@
-SRC	=	src/event.cpp \
-		src/orca.cpp \
-		src/element.cpp \
-		src/open.cpp \
-		src/getFiles.cpp \
-		src/fileElement.cpp \
-		src/click.cpp
+SRC	=	src/Event.cpp \
+		src/Orca.cpp \
+		src/Element.cpp \
+		src/Open.cpp \
+		src/GetFiles.cpp \
+		src/FileElement.cpp \
+		src/Click.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 

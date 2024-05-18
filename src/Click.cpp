@@ -1,14 +1,14 @@
 #include <iostream>
 #include <filesystem>
-#include "../includes/orca.hpp"
+#include "../includes/Orca.hpp"
 
-bool Orca::doubleClick(const fileElement &file)
+bool Orca::doubleClick(const FileElement &file)
 {
     static bool antiSpam = false;
     static int keyNumber = 0;
     static sf::Int32 last = 0;
     static int lastIndex = 0;
-    sf::Int32 current = clock->getElapsedTime().asMilliseconds();
+    sf::Int32 current = clock.getElapsedTime().asMilliseconds();
     int diff = current - last;
 
     if (file.getIndex() != lastIndex && keyNumber != 0) {
@@ -36,7 +36,7 @@ bool Orca::doubleClick(const fileElement &file)
     return false;
 }
 
-int Orca::onClick(const fileElement &file)
+int Orca::onClick(const FileElement &file)
 {
     const bool click = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
     const bool maj = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift);
@@ -49,7 +49,7 @@ int Orca::onClick(const fileElement &file)
     if (!maj && !ctrl) {
         selected.clear();
         selected.push_back(file);
-        if (selected.size() == 1 && file.getType() == fileElement::Type::DIRECTORY)
+        if (selected.size() == 1 && file.getType() == FileElement::Type::DIRECTORY)
             if (doubleClick(file))
                 return 2;
         return 0;
@@ -61,7 +61,7 @@ int Orca::onClick(const fileElement &file)
         return 0;
     }
     // maj
-    const fileElement &a = !selected.empty() ? selected.at(0) : files.at(0);
+    const FileElement &a = !selected.empty() ? selected.at(0) : files.at(0);
     int difference = a.getIndex() - file.getIndex();
     int differenceAbs = abs(difference);
     int differenceIsPos = difference >= 0;
