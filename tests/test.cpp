@@ -8,7 +8,7 @@ int main(void)
     std::vector<fileElement> result = orca.open();
 
     for (auto &element : result) {
-        std::cout << std::string(element.getText().getString()) << std::endl;
+        std::cout << std::string(element.getString()) << std::endl;
     }
-    return (0);
+    return 0;
 }

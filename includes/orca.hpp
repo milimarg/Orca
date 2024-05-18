@@ -19,7 +19,7 @@
         public:
             Orca(const sf::VideoMode &videoMode, const std::string &fontPath);
             ~Orca();
-            std::vector<fileElement> open();
+            std::vector<fileElement> &open();
         private:
             sf::RenderWindow *window;
             sf::Clock *clock;
@@ -41,8 +41,8 @@
             void readCurrentPath();
             void appendFile(std::string filename, std::string filepath, fileElement::Type type, int &index);
             // click
-            int onClick(fileElement &element);
-            void doubleClick(fileElement &element);
+            int onClick(const fileElement &element);
+            bool doubleClick(const fileElement &element);
     };
 
 #endif //ORCA_ORCA_HPP

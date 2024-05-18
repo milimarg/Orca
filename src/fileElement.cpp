@@ -3,61 +3,64 @@
 
 fileElement::fileElement(sf::Vector2f &pos,
                          const sf::Color &color,
-                         std::string name,
-                         std::string _path,
-                         sf::Font &font)
+                         const std::string &name,
+                         const std::string &path,
+                         const sf::Font &font)
+    : _path(path)
 {
-    path = _path;
-    data.setString(name);
-    data.setFont(font);
-    data.setCharacterSize(15);
-    data.setPosition(pos.x, pos.y);
-    data.setFillColor(color);
-    data.setOutlineColor(color);
-    background.setPosition(data.getPosition());
-    background.setSize(sf::Vector2f(650, 20));
-    background.setOutlineColor(sf::Color::Blue);
-    background.setFillColor(sf::Color::Blue);
+    _data.setString(name);
+    _data.setFont(font);
+    _data.setCharacterSize(15);
+    _data.setPosition(pos.x, pos.y);
+    _data.setFillColor(color);
+    _data.setOutlineColor(color);
+    _background.setPosition(_data.getPosition());
+    _background.setSize(sf::Vector2f(650, 20));
+    _background.setOutlineColor(sf::Color::Blue);
+    _background.setFillColor(sf::Color::Blue);
 }
 
-void fileElement::setIcon(fileElement::Type _type, std::unordered_map <std::string, sf::Texture> &assets)
+void fileElement::setIcon(fileElement::Type type, std::unordered_map <std::string, sf::Texture> &assets)
 {
-    type = _type;
-    if (type == DIRECTORY) {
-        icon = sf::Sprite(assets["directory"]);
-    }
-    if (type == REGULAR) {
-        icon = sf::Sprite(assets["file"]);
-    }
-    icon.setPosition(data.getPosition().x - 30.0f, data.getPosition().y);
+    _type = type;
+    if (type == Type::DIRECTORY)
+        _icon = sf::Sprite(assets["directory"]);
+    if (type == Type::REGULAR)
+        _icon = sf::Sprite(assets["file"]);
+    _icon.setPosition(_data.getPosition().x - 30.0f, _data.getPosition().y);
 }
 
 void fileElement::draw(sf::RenderWindow *window)
 {
-    window->draw(icon);
-    window->draw(data);
+    window->draw(_icon);
+    window->draw(_data);
 }
 
-bool fileElement::onHover(sf::RenderWindow *window)
+bool fileElement::onHover(sf::RenderWindow *window) const
 {
     sf::Vector2f pos = sf::Vector2f(sf::Mouse::getPosition(*window));
-    sf::FloatRect rect(background.getPosition(), background.getSize());
+    sf::FloatRect rect(_background.getPosition(), _background.getSize());
     return rect.contains(pos);
 }
 
-fileElement::Type fileElement::getType()
+fileElement::Type fileElement::getType() const
 {
-    return type;
+    return _type;
 }
 
-sf::Text &fileElement::getText()
+std::string fileElement::getString() const
 {
-    return data;
+    return _data.getString();
 }
 
-int fileElement::getIndex()
+void fileElement::setString(const std::string &name)
 {
-    return index;
+    _data.setString(name);
+}
+
+int fileElement::getIndex() const
+{
+    return _index;
 }
 
 void fileElement::setIndex(int index)
@@ -66,5 +69,12 @@ void fileElement::setIndex(int index)
         std::cerr << "fileElement index out of range" << std::endl;
         return;
     }
-    this->index = index;
+    _index = index;
+}
+
+bool fileElement::operator==(const fileElement &other)
+{
+    return _type == other.getType() &&
+           _data.getString() == other.getString() &&
+           _index == other.getIndex();
 }

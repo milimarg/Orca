@@ -6,25 +6,33 @@
 
     class fileElement {
         public:
-            enum Type {
+
+        enum class Type {
                 REGULAR,
                 DIRECTORY
             };
-            fileElement(sf::Vector2f &pos, const sf::Color &color, std::string name, std::string path, sf::Font &font);
+            fileElement(sf::Vector2f &pos,
+                        const sf::Color &color,
+                        const std::string &name,
+                        const std::string &path,
+                        const sf::Font &font);
             void setIcon(fileElement::Type _type, std::unordered_map<std::string, sf::Texture> &assets);
             void draw(sf::RenderWindow *window);
-            bool onHover(sf::RenderWindow *window);
-            fileElement::Type getType();
-            sf::Text &getText();
-            int getIndex();
+            bool onHover(sf::RenderWindow *window) const;
+            fileElement::Type getType() const;
+            std::string getString() const;
+            void setString(const std::string &name);
+            int getIndex() const;
             void setIndex(int index);
-            sf::RectangleShape background;
+            sf::RectangleShape _background;
+
+            bool operator==(const fileElement &other);
         private:
-            sf::Sprite icon;
-            Type type;
-            sf::Text data;
-            int index;
-            std::string path;
+            sf::Sprite _icon;
+            Type _type;
+            sf::Text _data;
+            int _index;
+            const std::string &_path;
     };
 
 #endif //ORCA_FILEELEMENT_HPP

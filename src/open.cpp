@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../includes/orca.hpp"
 
-std::vector<fileElement> Orca::open()
+std::vector<fileElement> &Orca::open()
 {
     sf::Event event;
     static int quit = 0;
@@ -16,11 +16,14 @@ std::vector<fileElement> Orca::open()
                 window->draw(element.second);
             }
             for (auto &selected : selected) {
-                window->draw(selected.background);
+                window->draw(selected._background);
             }
             int output = 1;
             for (auto &file : files) {
-                output = output && onClick(file);
+                int v = onClick(file);
+                if (v == 2)
+                    break;
+                output = output && v;
                 file.draw(window);
             }
             if (output == 1 && selected.size() > 0) {

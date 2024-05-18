@@ -12,9 +12,9 @@ NAME	=	liborca.so
 
 TEST	=	test
 
-CPPFLAGS	=	-Wall -Wextra -std=c++20 -I/opt/homebrew/Cellar/sfml/2.6.1/include
+CPPFLAGS	=	-Wall -Wextra -std=c++20 -fPIC -g
 
-SFMLFLAGS	=	-L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-system -lsfml-window
+SFMLFLAGS	=	-lsfml-graphics -lsfml-system -lsfml-window
 
 all: $(NAME)
 
@@ -31,6 +31,6 @@ fclean: clean
 re: fclean all
 
 test:
-	g++ -o $(TEST) tests/test.cpp -std=c++20 $(SFMLFLAGS) $(CPPFLAGS) -L. -lorca
+	g++ -o $(TEST) tests/test.cpp $(SFMLFLAGS) $(CPPFLAGS) -L. -lorca
 
-.PHONY: all clean fclean re example
+.PHONY: all clean fclean re test

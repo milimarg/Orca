@@ -22,7 +22,7 @@ void Orca::appendFile(std::string filename,
     fileElement file(pos, sf::Color::White, filename, filepath, font);
     file.setIcon(type, assets);
     file.setIndex(index);
-    file.getText().setString(file.getText().getString());
+    file.setString(file.getString());
     files.push_back(file);
     index++;
 }
@@ -33,14 +33,14 @@ void Orca::readCurrentPath()
     fileElement::Type type;
 
     files.clear();
-    type = fileElement::DIRECTORY;
+    type = fileElement::Type::DIRECTORY;
     appendFile("..", currentPath, type, index);
     for (const auto &entry : std::filesystem::directory_iterator(currentPath)) {
         if (std::filesystem::is_regular_file(entry)) {
-            type = fileElement::REGULAR;
+            type = fileElement::Type::REGULAR;
         }
         if (std::filesystem::is_directory(entry)) {
-            type = fileElement::DIRECTORY;
+            type = fileElement::Type::DIRECTORY;
         }
         if (entry.path().filename().string().at(0) == '.') {
             continue;
