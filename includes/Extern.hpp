@@ -11,8 +11,8 @@
     #include "Orca.hpp"
 
 extern "C" {
-    std::unique_ptr<Orca> entryPoint(const sf::VideoMode &videoMode, const std::string &fontPath) {
-        return make_unique<Orca>(videoMode, fontPath);
+    std::unique_ptr<Orca> entryPoint() {
+        return std::make_unique<Orca>();
     }
 }
 
