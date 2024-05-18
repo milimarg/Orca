@@ -26,7 +26,7 @@
             sf::VideoMode windowSize;
             sf::VideoMode minScreenSize;
             std::unordered_map<std::string, sf::RectangleShape> elements;
-            int allowDisplay;
+            int allowDisplay = 1;
             std::string currentPath;
             std::vector<FileElement> files;
             sf::Font font;

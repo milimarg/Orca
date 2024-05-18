@@ -1,5 +1,7 @@
 #include <filesystem>
+#include <iostream>
 #include "../includes/Orca.hpp"
+#include "../includes/Extern.hpp"
 
 Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontPath)
     : _quit(false)
