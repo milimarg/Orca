@@ -50,4 +50,10 @@
             bool doubleClick(const FileElement &element);
     };
 
+    extern "C" {
+        std::unique_ptr<Orca> entryPoint() {
+            return std::make_unique<Orca>();
+        }
+    }
+
 #endif //ORCA_ORCA_HPP

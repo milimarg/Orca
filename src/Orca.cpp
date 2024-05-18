@@ -1,6 +1,6 @@
 #include <filesystem>
 #include <iostream>
-#include "../includes/Extern.hpp"
+#include "../includes/Orca.hpp"
 
 Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontPath)
     : _quit(false)
@@ -227,4 +227,18 @@ void Orca::readCurrentPath()
         }
         appendFile(entry.path().filename().string(), entry.path().string(), type, index);
     }
+}
+
+void Orca::addElement(sf::IntRect rect, sf::Color color, std::string name)
+{
+    if (elements.size() == UI_ELEMENTS_NUMBER) {
+        std::cerr << "Orca: cannot add new element: array is full" << std::endl;
+        return;
+    }
+    sf::RectangleShape shape(sf::Vector2f(rect.width, rect.height));
+
+    shape.setPosition(rect.left, rect.top);
+    shape.setFillColor(color);
+    shape.setOutlineColor(color);
+    elements[name] = shape;
 }

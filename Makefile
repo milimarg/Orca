@@ -1,6 +1,5 @@
 SRC	=	src/Orca.cpp \
-		src/FileElement.cpp \
-		src/Element.cpp
+		src/FileElement.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
