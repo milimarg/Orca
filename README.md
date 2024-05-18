@@ -1,3 +1,3 @@
 # Orca
 
-Small file manager library made up with a C++ Graphics Library (SFML).
+Tiny file manager library made up with a C++ Graphics Library (SFML).

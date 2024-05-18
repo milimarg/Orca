@@ -3,7 +3,9 @@
 
 int main(void)
 {
-    Orca orca(sf::VideoMode(800, 600), "./assets/fonts/Roboto-Regular.ttf");
+    Orca orca;
+
+    orca.setFontPath("./assets/fonts/Roboto-Regular.ttf");
 
     std::vector<FileElement> &result = orca.open();
 

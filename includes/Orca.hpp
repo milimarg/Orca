@@ -17,9 +17,12 @@
 
     class Orca {
         public:
-            Orca(const sf::VideoMode &videoMode, const std::string &fontPath);
+            Orca(const sf::VideoMode &videoMode = sf::VideoMode(800, 600),
+                 const std::string &fontPath = "./assets/fonts/Roboto-Regular.ttfa");
             ~Orca() = default;
             std::vector<FileElement> &open();
+            void setVideoMode(const sf::VideoMode &mode);
+            void setFontPath(const std::string &fontPath);
         private:
             sf::RenderWindow window;
             sf::Clock clock;

@@ -9,7 +9,9 @@ Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontPath)
     window.setSize(sf::Vector2u(videoMode.width, videoMode.height));
     windowSize = videoMode;
     minScreenSize = sf::VideoMode(800, 600);
-    font.loadFromFile(fontPath);
+
+    if (std::filesystem::exists(fontPath))
+        font.loadFromFile(fontPath);
     static const int x_shift = 150;
     addElement(sf::IntRect(0, 0, x_shift, windowSize.height), sf::Color(40, 40, 40), "leftbar");
     addElement(sf::IntRect(x_shift, 0, windowSize.width - x_shift, 50), sf::Color(60, 60, 60), "topbar");
@@ -31,4 +33,15 @@ Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontPath)
         texture.loadFromFile(UIAsset);
         assets[filename.stem().string()] = texture;
     }
+}
+
+void Orca::setVideoMode(const sf::VideoMode &mode)
+{
+    windowSize = mode;
+}
+
+void Orca::setFontPath(const std::string &fontPath)
+{
+    if (std::filesystem::exists(fontPath))
+        font.loadFromFile(fontPath);
 }
