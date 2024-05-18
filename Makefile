@@ -1,9 +1,5 @@
-SRC	=	src/Event.cpp \
-		src/Orca.cpp \
-		src/Open.cpp \
-		src/GetFiles.cpp \
+SRC	=	src/Orca.cpp \
 		src/FileElement.cpp \
-		src/Click.cpp \
 		src/Element.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
