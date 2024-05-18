@@ -19,7 +19,6 @@ Orca::Orca(const sf::VideoMode &videoMode, const std::string &fontPath)
                            windowSize.height - selectionButtonSize.y - 10,
                            selectionButtonSize.x,
                            selectionButtonSize.y), sf::Color(60, 60, 60), "selectionbutton");
-    selectionButtonText = sf::Text();
     selectionButtonText.setFont(font);
     selectionButtonText.setString("OK");
     sf::Vector2f pos = elements["selectionbutton"].getPosition();
@@ -98,8 +97,9 @@ void Orca::runEvent(sf::Event &event)
         }
     }
     sf::Vector2f pos = sf::Vector2f(sf::Mouse::getPosition(window));
-    if (elements["selectionbutton"].getGlobalBounds().contains(pos) &&
-        sf::Mouse::isButtonPressed(sf::Mouse::Left) && !selected.empty())
+    if (((elements["selectionbutton"].getGlobalBounds().contains(pos) &&
+        sf::Mouse::isButtonPressed(sf::Mouse::Left)) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) &&
+        !selected.empty())
         _quit = true;
     checkIfAllowDisplay();
 }
